@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/leoxu1.github.io/maps/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/leoxu1.github.io/maps/static/js/main.90aaf3dc.chunk.js",
-    "main.js.map": "/leoxu1.github.io/maps/static/js/main.90aaf3dc.chunk.js.map",
-    "runtime-main.js": "/leoxu1.github.io/maps/static/js/runtime-main.e3320f34.js",
-    "runtime-main.js.map": "/leoxu1.github.io/maps/static/js/runtime-main.e3320f34.js.map",
-    "static/js/2.b2b48d76.chunk.js": "/leoxu1.github.io/maps/static/js/2.b2b48d76.chunk.js",
-    "static/js/2.b2b48d76.chunk.js.map": "/leoxu1.github.io/maps/static/js/2.b2b48d76.chunk.js.map",
-    "static/js/3.ec508519.chunk.js": "/leoxu1.github.io/maps/static/js/3.ec508519.chunk.js",
-    "static/js/3.ec508519.chunk.js.map": "/leoxu1.github.io/maps/static/js/3.ec508519.chunk.js.map",
-    "index.html": "/leoxu1.github.io/maps/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/leoxu1.github.io/maps/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.b2b48d76.chunk.js.LICENSE.txt": "/leoxu1.github.io/maps/static/js/2.b2b48d76.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/leoxu1.github.io/maps/static/media/logo.6ce24c58.svg"
+    "main.css": "/maps/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/maps/static/js/main.90aaf3dc.chunk.js",
+    "main.js.map": "/maps/static/js/main.90aaf3dc.chunk.js.map",
+    "runtime-main.js": "/maps/static/js/runtime-main.4bc4bb19.js",
+    "runtime-main.js.map": "/maps/static/js/runtime-main.4bc4bb19.js.map",
+    "static/js/2.b2b48d76.chunk.js": "/maps/static/js/2.b2b48d76.chunk.js",
+    "static/js/2.b2b48d76.chunk.js.map": "/maps/static/js/2.b2b48d76.chunk.js.map",
+    "static/js/3.ec508519.chunk.js": "/maps/static/js/3.ec508519.chunk.js",
+    "static/js/3.ec508519.chunk.js.map": "/maps/static/js/3.ec508519.chunk.js.map",
+    "index.html": "/maps/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/maps/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.b2b48d76.chunk.js.LICENSE.txt": "/maps/static/js/2.b2b48d76.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/maps/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e3320f34.js",
+    "static/js/runtime-main.4bc4bb19.js",
     "static/js/2.b2b48d76.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
     "static/js/main.90aaf3dc.chunk.js"
