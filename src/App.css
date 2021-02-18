@@ -7,12 +7,15 @@
   pointer-events: none;
 }
 
-.container {
-  height: 800px;
-  width: 1000px;
+.base {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container {
+  width: 750px;
+  height: 1000px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
