@@ -1,0 +1,14 @@
+.cityEntry:hover {
+  background-color: #eee
+}
+
+.cityEntry {
+  display: flex;
+  justify-content: space-between;
+  width: 500px
+}
+
+.resultsList {
+  height: 400px;
+  overflow: scroll;
+}

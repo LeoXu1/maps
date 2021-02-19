@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { memo } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -10,7 +10,7 @@ import {
 const geoUrl =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const MapChart = ({coords}) => {
+const MapChart = ({setTooltipContent, coords}) => {
   return (
     <>
       <ComposableMap data-tip="" projection="geoAlbersUsa">
