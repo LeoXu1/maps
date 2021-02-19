@@ -10,7 +10,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filteredCities: filterCities("", 20)
+      filteredCities: filterCities("", 20),
+      coords: [-149.1091, 61.1508]
     };
   }
 
@@ -22,15 +23,15 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div class="base">
-        <div class="container">
+      <div className="base">
+        <div className="container">
           <h1>Search</h1>
           <input type="text" onChange={this.handleSearchChange}/>
           <CityResults cityData={this.state.filteredCities} />
         </div>
-        <div class="container">
+        <div className="container">
           <h1>Map</h1>
-          <MapChart />
+          <MapChart coords={this.state.coords}/>
         </div>
       </div>
     );
