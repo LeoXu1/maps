@@ -9,6 +9,7 @@
 }
 
 .resultsList {
-  height: 400px;
+  width: 550px;
+  height: 420px;
   overflow: scroll;
 }

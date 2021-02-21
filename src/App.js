@@ -10,10 +10,15 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coords: [-149.1091, 61.1508],
+      coords: [-73.9249, 40.6943],
       query: "",
       selectedState: "",
-      numResults: 20
+      numResults: 20,
+      city: "New York",
+      stateID: "NY",
+      county: "New York",
+      incorporated: "TRUE",
+      military: "FALSE"
     };
   }
 
@@ -30,7 +35,19 @@ export default class App extends React.Component {
     });
   };
 
+  setInfo = info => {
+    this.setState({
+      city: info.city,
+      stateID: info.stateID,
+      county: info.county,
+      incorporated: info.incorporated,
+      military: info.military
+    })
+  }
+
   render() {
+    const isLAorAK = this.state.stateID === "LA" || this.state.stateID === "AK"
+    const isLA = this.state.stateID === "LA"
     return (
       <div className="base">
         <div className="container">
@@ -52,11 +69,30 @@ export default class App extends React.Component {
           </div>
           <CityResults
           citySelect={this.handleCityClick}
+          setInfo={this.setInfo}
           cityData={filterCities(this.state.query,this.state.selectedState,this.state.numResults)}
           />
         </div>
         <div className="container">
           <h1>Map</h1>
+          <div className="header">
+            <span>{this.state.city}, {this.state.stateID}</span>
+            {isLAorAK ? isLA ? (
+              <>
+              <span>{this.state.county} Parish</span>
+              </>
+            ) : (
+              <>
+              <span>{this.state.county} Borough</span>
+              </>
+            ) : (
+              <>
+              <span>{this.state.county} County</span>
+              </>
+            )}
+            <span>Incorporated: {this.state.incorporated}</span>
+            <span>Military: {this.state.military}</span>
+          </div>
           <MapChart coords={this.state.coords}/>
         </div>
       </div>
