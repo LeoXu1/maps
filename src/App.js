@@ -14,6 +14,7 @@ export default class App extends React.Component {
       query: "",
       selectedState: "",
       numResults: 20,
+      milOnly: "FALSE",
       city: "New York",
       stateID: "NY",
       county: "New York",
@@ -34,6 +35,12 @@ export default class App extends React.Component {
       coords: loc
     });
   };
+
+  handleCheckbox = event => {
+    this.setState({
+      milOnly: event.target.checked ? "TRUE" : "FALSE"
+    });
+  }
 
   setInfo = info => {
     this.setState({
@@ -65,12 +72,14 @@ export default class App extends React.Component {
               <option>75</option>
               <option>100</option>
             </select>
-            <span>Population</span>
+            <span>Military?</span>
+            <input type="checkbox" name="milOnly" onChange={this.handleCheckbox}/>
           </div>
           <CityResults
           citySelect={this.handleCityClick}
           setInfo={this.setInfo}
-          cityData={filterCities(this.state.query,this.state.selectedState,this.state.numResults)}
+          cityData={filterCities(this.state.query,this.state.selectedState,this.state.numResults,
+                                this.state.milOnly)}
           />
         </div>
         <div className="container">
