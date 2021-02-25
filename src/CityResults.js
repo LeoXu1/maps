@@ -3,8 +3,13 @@ import "./CityResults.css"
 
 export default class CityResults extends React.Component {
 
-  handleClick(lng, lat, cty, st, ct, inc, mil) {
-    const loc = [lng, lat]
+  handleClick(id, lng, lat, cty, st, ct, inc, mil) {
+    const loc = {
+      id: id,
+      loc: [lng, lat],
+      city: cty,
+      stateID: st
+    }
     const info = {
       city: cty,
       stateID: st,
@@ -22,7 +27,7 @@ export default class CityResults extends React.Component {
         {this.props.cityData.map(cityData => (
           <div
           key={cityData.id}
-          onClick={() => this.handleClick(cityData.lng,
+          onClick={() => this.handleClick(cityData.id, cityData.lng,
             cityData.lat, cityData.city, cityData.state_id,
             cityData.county_name, cityData.incorporated, cityData.military)}
           className="cityEntry">

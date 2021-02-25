@@ -5,12 +5,14 @@ import MapChart from "./MapChart";
 import filterCities from "./filterCities"
 import CityResults from "./CityResults"
 import allStates from "./allStates.json"
+import ReactTooltip from "react-tooltip";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coords: [-73.9249, 40.6943],
+      tooltip: "",
+      coords: [],
       query: "",
       selectedState: "",
       numResults: 20,
@@ -31,8 +33,16 @@ export default class App extends React.Component {
   };
 
   handleCityClick = loc => {
+    const newCoords = this.state.coords.concat(loc)
     this.setState({
-      coords: loc
+      coords: newCoords
+    });
+  };
+
+  handleRemove = id => {
+    const newCoords = this.state.coords.filter(cty => cty.id !== id)
+    this.setState({
+      coords: newCoords
     });
   };
 
@@ -49,6 +59,12 @@ export default class App extends React.Component {
       county: info.county,
       incorporated: info.incorporated,
       military: info.military
+    })
+  }
+
+  setContent = content => {
+    this.setState({
+      tooltip: content
     })
   }
 
@@ -102,7 +118,12 @@ export default class App extends React.Component {
             <span>Incorporated: {this.state.incorporated}</span>
             <span>Military: {this.state.military}</span>
           </div>
-          <MapChart coords={this.state.coords}/>
+          <MapChart
+          coords={this.state.coords}
+          setTooltipContent={this.setContent}
+          remove={this.handleRemove}
+          />
+          <ReactTooltip>{this.state.tooltip}</ReactTooltip>
         </div>
       </div>
     );
