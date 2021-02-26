@@ -10,7 +10,7 @@ import {
 const geoUrl =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const MapChart = ({setTooltipContent, coords, remove}) => {
+const MapChart = ({setTooltipContent, coords, selectCity}) => {
   return (
     <>
       <ComposableMap data-tip="" projection="geoAlbersUsa">
@@ -29,7 +29,7 @@ const MapChart = ({setTooltipContent, coords, remove}) => {
               ))
             }
           </Geographies>
-          {coords.map(({id, loc, city, stateID}) => (
+          {coords.map(({id, loc, city, stateID, county, military}) => (
             <Marker
             key = {id}
             coordinates={loc}
@@ -41,7 +41,7 @@ const MapChart = ({setTooltipContent, coords, remove}) => {
               setTooltipContent("");
             }}
             onClick={() => {
-              remove(id);
+              selectCity({id: id, city: city, stateID: stateID, county: county, military: military});
               setTooltipContent("");
             }}
             >

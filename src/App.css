@@ -22,7 +22,7 @@
   display: flex;
   justify-content: space-between;
   width: 500px;
-  padding: 0px;
+  height: 20px;
 }
 
 .header span {

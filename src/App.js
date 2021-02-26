@@ -20,8 +20,9 @@ export default class App extends React.Component {
       city: "New York",
       stateID: "NY",
       county: "New York",
-      incorporated: "TRUE",
-      military: "FALSE"
+      id: "",
+      military: "FALSE",
+      isSelected: false
     };
   }
 
@@ -35,14 +36,15 @@ export default class App extends React.Component {
   handleCityClick = loc => {
     const newCoords = this.state.coords.concat(loc)
     this.setState({
-      coords: newCoords
+      coords: newCoords,
     });
   };
 
-  handleRemove = id => {
+  handleRemove(id) {
     const newCoords = this.state.coords.filter(cty => cty.id !== id)
     this.setState({
-      coords: newCoords
+      coords: newCoords,
+      isSelected: false
     });
   };
 
@@ -57,8 +59,9 @@ export default class App extends React.Component {
       city: info.city,
       stateID: info.stateID,
       county: info.county,
-      incorporated: info.incorporated,
-      military: info.military
+      id: info.id,
+      military: info.military,
+      isSelected: true
     })
   }
 
@@ -100,28 +103,39 @@ export default class App extends React.Component {
         </div>
         <div className="container">
           <h1>Map</h1>
-          <div className="header">
-            <span>{this.state.city}, {this.state.stateID}</span>
-            {isLAorAK ? isLA ? (
-              <>
-              <span>{this.state.county} Parish</span>
-              </>
-            ) : (
-              <>
-              <span>{this.state.county} Borough</span>
-              </>
-            ) : (
-              <>
-              <span>{this.state.county} County</span>
-              </>
-            )}
-            <span>Incorporated: {this.state.incorporated}</span>
-            <span>Military: {this.state.military}</span>
-          </div>
+
+          {this.state.isSelected ? (
+            <>
+              <div className="header">
+                <span>{this.state.city}, {this.state.stateID}</span>
+                {isLAorAK ? isLA ? (
+                  <>
+                  <span>{this.state.county} Parish</span>
+                  </>
+                ) : (
+                  <>
+                  <span>{this.state.county} Borough</span>
+                  </>
+                ) : (
+                  <>
+                  <span>{this.state.county} County</span>
+                  </>
+                )}
+                <span>Military: {this.state.military}</span>
+                <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="header">
+                <span>No city selected</span>
+              </div>
+            </>
+          )}
           <MapChart
           coords={this.state.coords}
           setTooltipContent={this.setContent}
-          remove={this.handleRemove}
+          selectCity={this.setInfo}
           />
           <ReactTooltip>{this.state.tooltip}</ReactTooltip>
         </div>
