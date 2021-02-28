@@ -34,8 +34,13 @@ const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
             key = {id}
             coordinates={loc}
             onMouseEnter={() => {
-              const name = city.concat(", ",stateID,'&#013;',county)
-              setTooltipContent(name);
+              const name = city.concat(", ",stateID,)
+              const mil = military == "TRUE"
+              if (mil){
+                setTooltipContent(<div>{name}<br />{county}<br />Military base</div>);
+              } else {
+                setTooltipContent(<div>{name}<br />{county}</div>);
+              }
             }}
             onMouseLeave={() => {
               setTooltipContent("");

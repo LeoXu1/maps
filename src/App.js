@@ -12,6 +12,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       tooltip: "",
+      size: 3,
       coords: [],
       query: "",
       selectedState: "",
@@ -102,32 +103,29 @@ export default class App extends React.Component {
           />
         </div>
         <div className="container">
-          <h1>Map</h1>
+        <h1>Map</h1>
           {this.state.isSelected ? (
             <>
               <div className="header">
-                <span>{this.state.city}, {this.state.stateID}</span>
-                {isLAorAK ? isLA ? (
-                  <>
-                  <span>{this.state.county} Parish</span>
-                  </>
-                ) : (
-                  <>
-                  <span>{this.state.county} Borough</span>
-                  </>
-                ) : (
-                  <>
-                  <span>{this.state.county} County</span>
-                  </>
-                )}
-                <span>Military: {this.state.military}</span>
                 <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
+                <div className="form">
+                  <label for="size">
+                    Size:
+                  </label>
+                  <input type="number" value={this.state.size} name="size" onChange={this.handleSearchChange}/>
+                </div>
               </div>
             </>
           ) : (
             <>
               <div className="header">
                 <span>No city selected</span>
+                <div className="form">
+                  <label for="size">
+                    Size:
+                  </label>
+                  <input type="number" value={this.state.size} name="size" onChange={this.handleSearchChange}/>
+                </div>
               </div>
             </>
           )}
@@ -135,7 +133,7 @@ export default class App extends React.Component {
           coords={this.state.coords}
           setTooltipContent={this.setContent}
           selectCity={this.setInfo}
-          size={3}
+          size={this.state.size}
           />
           <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>
