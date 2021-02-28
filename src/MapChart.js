@@ -10,10 +10,10 @@ import {
 const geoUrl =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const MapChart = ({setTooltipContent, coords, selectCity}) => {
+const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
   return (
     <>
-      <ComposableMap data-tip="" projection="geoAlbersUsa">
+      <ComposableMap data-tip='' projection="geoAlbersUsa">
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -34,7 +34,7 @@ const MapChart = ({setTooltipContent, coords, selectCity}) => {
             key = {id}
             coordinates={loc}
             onMouseEnter={() => {
-              const name = city.concat(", ",stateID)
+              const name = city.concat(", ",stateID,'&#013;',county)
               setTooltipContent(name);
             }}
             onMouseLeave={() => {
@@ -44,8 +44,17 @@ const MapChart = ({setTooltipContent, coords, selectCity}) => {
               selectCity({id: id, city: city, stateID: stateID, county: county, military: military});
               setTooltipContent("");
             }}
+            style={
+            {
+              default: {
+                opacity: 0.5
+              },
+              hover: {
+                opacity: 1
+              }
+            }}
             >
-            <circle r={3} fill="#0079d3" stroke="#000" strokeWidth={0.5} />
+            <circle r={size} fill="#0079d3" stroke="#000" strokeWidth={0.5} />
             </Marker>
           ))}
         </ZoomableGroup>

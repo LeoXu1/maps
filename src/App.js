@@ -103,7 +103,6 @@ export default class App extends React.Component {
         </div>
         <div className="container">
           <h1>Map</h1>
-
           {this.state.isSelected ? (
             <>
               <div className="header">
@@ -136,8 +135,9 @@ export default class App extends React.Component {
           coords={this.state.coords}
           setTooltipContent={this.setContent}
           selectCity={this.setInfo}
+          size={3}
           />
-          <ReactTooltip>{this.state.tooltip}</ReactTooltip>
+          <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>
       </div>
     );
