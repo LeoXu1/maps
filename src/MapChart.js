@@ -7,10 +7,9 @@ import {
   Marker
 } from "react-simple-maps";
 
-const geoUrl =
-  "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
-
-const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
+const MapChart = ({setTooltipContent, coords, selectCity, size, mode}) => {
+  const geoUrl =
+    "https://cdn.jsdelivr.net/npm/us-atlas@3/"+mode+"-10m.json";
   return (
     <>
       <ComposableMap data-tip='' projection="geoAlbersUsa">
@@ -24,6 +23,17 @@ const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
                   strokeWidth='0.5'
                   geography={geo}
                   fill={"#d6d6d6"}
+                  onMouseEnter={() => {
+                    setTooltipContent(geo.properties.name);
+                  }}
+                  onMouseLeave={() => {
+                    setTooltipContent("");
+                  }}
+                  style={{
+                    default: { outline: "none" },
+                    hover: { outline: "none", fill:"#949494" },
+                    pressed: { outline: "none" },
+                  }}
                 />
 
               ))
@@ -35,7 +45,7 @@ const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
             coordinates={loc}
             onMouseEnter={() => {
               const name = city.concat(", ",stateID,)
-              const mil = military == "TRUE"
+              const mil = military === "TRUE"
               if (mil){
                 setTooltipContent(<div>{name}<br />{county}<br />Military base</div>);
               } else {
@@ -59,7 +69,7 @@ const MapChart = ({setTooltipContent, coords, selectCity, size}) => {
               }
             }}
             >
-            <circle r={size} fill="#0079d3" stroke="#000" strokeWidth={0.5} />
+            <circle r={size} fill="#0079d3" stroke="#000" strokeWidth={0.1} />
             </Marker>
           ))}
         </ZoomableGroup>

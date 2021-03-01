@@ -11,6 +11,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode: "states",
       tooltip: "",
       size: 3,
       coords: [],
@@ -35,10 +36,12 @@ export default class App extends React.Component {
   };
 
   handleCityClick = loc => {
-    const newCoords = this.state.coords.concat(loc)
-    this.setState({
-      coords: newCoords,
-    });
+    if (!this.state.coords.some((l) => l.id === loc.id)) {
+      const newCoords = this.state.coords.concat(loc)
+      this.setState({
+        coords: newCoords,
+      });
+    }
   };
 
   handleRemove(id) {
@@ -73,8 +76,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    const isLAorAK = this.state.stateID === "LA" || this.state.stateID === "AK"
-    const isLA = this.state.stateID === "LA"
     return (
       <div className="base">
         <div className="container">
@@ -107,6 +108,11 @@ export default class App extends React.Component {
           {this.state.isSelected ? (
             <>
               <div className="header">
+                <span>{this.state.city}, {this.state.stateID}</span>
+                <select name="mode" onChange={this.handleSearchChange}>
+                  <option>states</option>
+                  <option>counties</option>
+                </select>
                 <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
                 <div className="form">
                   <label for="size">
@@ -120,6 +126,10 @@ export default class App extends React.Component {
             <>
               <div className="header">
                 <span>No city selected</span>
+                <select name="mode" onChange={this.handleSearchChange}>
+                  <option>states</option>
+                  <option>counties</option>
+                </select>
                 <div className="form">
                   <label for="size">
                     Size:
@@ -134,6 +144,7 @@ export default class App extends React.Component {
           setTooltipContent={this.setContent}
           selectCity={this.setInfo}
           size={this.state.size}
+          mode={this.state.mode}
           />
           <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>
