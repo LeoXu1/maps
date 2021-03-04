@@ -1,12 +1,13 @@
 import citiesList from "./citiesList.json";
 
-export default function filterCities(searchText, stateSearch, maxResults, milOnly) {
-  if (milOnly === "FALSE") {
-    if (stateSearch !== "") {
+export default function filterCities(searchText, stateSearch, countySearch, maxResults) {
+  if (stateSearch !== "") {
+    if (countySearch !== "") {
       return citiesList
         .filter(city => {
-          if (city.city.toLowerCase().includes(searchText.toLowerCase())
-              && city.state_name.toLowerCase() === stateSearch.toLowerCase()) {
+          if (city.CITY.toLowerCase().includes(searchText.toLowerCase())
+              && city.STATE_NAME.toLowerCase() === stateSearch.toLowerCase()
+              && countySearch.toLowerCase().includes(city.COUNTY.toLowerCase())) {
             return true;
           }
           return false;
@@ -16,38 +17,25 @@ export default function filterCities(searchText, stateSearch, maxResults, milOnl
     else {
       return citiesList
         .filter(city => {
-          if (city.city.toLowerCase().includes(searchText.toLowerCase())) {
+          if (city.CITY.toLowerCase().includes(searchText.toLowerCase())
+              && city.STATE_NAME.toLowerCase() === stateSearch.toLowerCase()) {
             return true;
           }
           return false;
         })
         .slice(0, maxResults);
     }
+
   }
   else {
-    if (stateSearch !== "") {
-      return citiesList
-        .filter(city => {
-          if (city.city.toLowerCase().includes(searchText.toLowerCase())
-              && city.state_name.toLowerCase() === stateSearch.toLowerCase()
-              && city.military === "TRUE") {
-            return true;
-          }
-          return false;
-        })
-        .slice(0, maxResults);
-    }
-    else {
-      return citiesList
-        .filter(city => {
-          if (city.city.toLowerCase().includes(searchText.toLowerCase())
-              && city.military === "TRUE") {
-            return true;
-          }
-          return false;
-        })
-        .slice(0, maxResults);
-    }
+    return citiesList
+      .filter(city => {
+        if (city.CITY.toLowerCase().includes(searchText.toLowerCase())) {
+          return true;
+        }
+        return false;
+      })
+      .slice(0, maxResults);
   }
 
 }

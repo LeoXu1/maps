@@ -3,14 +3,13 @@ import "./CityResults.css"
 
 export default class CityResults extends React.Component {
 
-  handleClick(id, lng, lat, cty, st, ct, military) {
+  handleClick(id, lng, lat, cty, st, ct) {
     const info = {
       id: id,
       loc: [lng, lat],
       city: cty,
       stateID: st,
       county: ct,
-      military: military
     }
     this.props.citySelect(info)
     this.props.setInfo(info)
@@ -21,13 +20,13 @@ export default class CityResults extends React.Component {
       <div className="resultsList">
         {this.props.cityData.map(cityData => (
           <div
-          key={cityData.id}
-          onClick={() => this.handleClick(cityData.id, cityData.lng,
-            cityData.lat, cityData.city, cityData.state_id,
-            cityData.county_name, cityData.military)}
+          key={cityData.ID}
+          onClick={() => this.handleClick(cityData.ID, cityData.LONGITUDE,
+            cityData.LATITUDE, cityData.CITY, cityData.STATE_CODE,
+            cityData.COUNTY)}
           className="cityEntry">
-            <h5>{cityData.city}, {cityData.state_id}</h5>
-            <h5>{cityData.population}</h5>
+            <h5>{cityData.CITY}, {cityData.STATE_CODE}</h5>
+            <h5>{cityData.COUNTY}</h5>
           </div>
         ))}
       </div>

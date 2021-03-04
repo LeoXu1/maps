@@ -5,6 +5,7 @@ import MapChart from "./MapChart";
 import filterCities from "./filterCities"
 import CityResults from "./CityResults"
 import allStates from "./allStates.json"
+import countiesList from "./countiesList"
 import ReactTooltip from "react-tooltip";
 
 export default class App extends React.Component {
@@ -17,15 +18,27 @@ export default class App extends React.Component {
       coords: [],
       query: "",
       selectedState: "",
+      selectedCounty: "",
       numResults: 20,
-      milOnly: "FALSE",
       city: "New York",
       stateID: "NY",
       county: "New York",
       id: "",
-      military: "FALSE",
       isSelected: false
     };
+  }
+
+  handleSizeChange = event => {
+    this.setState({
+      size: event.target.value
+    })
+  }
+
+  handleStateChange = event => {
+    this.setState({
+      selectedState: event.target.value,
+      selectedCounty: ""
+    })
   }
 
   handleSearchChange = event => {
@@ -52,21 +65,14 @@ export default class App extends React.Component {
     });
   };
 
-  handleCheckbox = event => {
-    this.setState({
-      milOnly: event.target.checked ? "TRUE" : "FALSE"
-    });
-  }
-
   setInfo = info => {
     this.setState({
       city: info.city,
       stateID: info.stateID,
       county: info.county,
       id: info.id,
-      military: info.military,
       isSelected: true
-    })
+    });
   }
 
   setContent = content => {
@@ -81,26 +87,44 @@ export default class App extends React.Component {
         <div className="container">
           <h1>Search</h1>
           <div className="header">
-            <input type="text" name="query" onChange={this.handleSearchChange}/>
-            <select name="selectedState" onChange={this.handleSearchChange}>
-              {allStates.map(state => (
-                <option key={state.val}>{state.id}</option>
-              ))}
-            </select>
-            <select name="numResults" onChange={this.handleSearchChange}>
-              <option>20</option>
-              <option>50</option>
-              <option>75</option>
-              <option>100</option>
-            </select>
-            <span>Military?</span>
-            <input type="checkbox" name="milOnly" onChange={this.handleCheckbox}/>
+            <div className="form">
+              <label>City: </label>
+              <input type="text" name="query" onChange={this.handleSearchChange}/>
+            </div>
+            <div className="form">
+              <label>State:</label>
+              <select name="selectedState" onChange={this.handleStateChange}>
+                {allStates.map(state => (
+                  <option key={state.val}>{state.id}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="header">
+            <div className="form">
+              <label>County: </label>
+              <select name="selectedCounty" onChange={this.handleSearchChange}>
+                {countiesList.filter(county => county.state_name === this.state.selectedState)
+                  .map(county => (
+                  <option key={county.fips}>{county.county_name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form">
+              <label>Results: </label>
+              <select name="numResults" onChange={this.handleSearchChange}>
+                <option>20</option>
+                <option>50</option>
+                <option>75</option>
+                <option>100</option>
+              </select>
+            </div>
           </div>
           <CityResults
           citySelect={this.handleCityClick}
           setInfo={this.setInfo}
-          cityData={filterCities(this.state.query,this.state.selectedState,this.state.numResults,
-                                this.state.milOnly)}
+          cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
+            this.state.numResults)}
           />
         </div>
         <div className="container">
@@ -115,10 +139,8 @@ export default class App extends React.Component {
                 </select>
                 <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
                 <div className="form">
-                  <label for="size">
-                    Size:
-                  </label>
-                  <input type="number" value={this.state.size} name="size" onChange={this.handleSearchChange}/>
+                  <label>Size: </label>
+                  <input type="number" value={this.state.size} name="size" onChange={this.handleSizeChange}/>
                 </div>
               </div>
             </>
@@ -131,10 +153,8 @@ export default class App extends React.Component {
                   <option>counties</option>
                 </select>
                 <div className="form">
-                  <label for="size">
-                    Size:
-                  </label>
-                  <input type="number" value={this.state.size} name="size" onChange={this.handleSearchChange}/>
+                  <label>Size: </label>
+                  <input type="number" value={this.state.size} name="size" onChange={this.handleSizeChange}/>
                 </div>
               </div>
             </>
