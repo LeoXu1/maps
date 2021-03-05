@@ -28,6 +28,29 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (!localStorage) {
+      this.setState({
+        coords: []
+      })
+    }
+    else {
+      try {
+        const cities = localStorage.getItem('cities') || ''
+        this.setState({
+          coords: JSON.parse(cities)
+        })
+      }
+      catch (err) {
+        this.setState({
+          coords: []
+        })
+      }
+
+    }
+
+  }
+
   handleSizeChange = event => {
     this.setState({
       size: event.target.value
@@ -81,6 +104,18 @@ export default class App extends React.Component {
     })
   }
 
+  clear() {
+    localStorage.removeItem("cities");
+    this.setState({
+      coords: [],
+      isSelected: false
+    })
+  }
+
+  save() {
+    localStorage.setItem("cities", JSON.stringify(this.state.coords))
+  }
+
   render() {
     return (
       <div className="base">
@@ -119,6 +154,10 @@ export default class App extends React.Component {
                 <option>100</option>
               </select>
             </div>
+          </div>
+          <div className="header">
+            <button onClick={()=>this.clear()}>Clear</button>
+            <button onClick={()=>this.save()}>Save</button>
           </div>
           <CityResults
           citySelect={this.handleCityClick}
@@ -165,6 +204,7 @@ export default class App extends React.Component {
           selectCity={this.setInfo}
           size={this.state.size}
           mode={this.state.mode}
+          selected={this.state.id}
           />
           <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>

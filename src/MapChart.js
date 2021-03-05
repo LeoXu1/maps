@@ -7,7 +7,7 @@ import {
   Marker
 } from "react-simple-maps";
 
-const MapChart = ({setTooltipContent, coords, selectCity, size, mode}) => {
+const MapChart = ({setTooltipContent, coords, selectCity, size, mode, selected}) => {
   const geoUrl =
     "https://cdn.jsdelivr.net/npm/us-atlas@3/"+mode+"-10m.json";
   return (
@@ -69,7 +69,12 @@ const MapChart = ({setTooltipContent, coords, selectCity, size, mode}) => {
               }
             }}
             >
-            <circle r={size} fill="#0079d3" stroke="#000" strokeWidth={0.1} />
+            {id === selected ?
+              <circle r={size} fill="#FFD700" stroke="#000" strokeWidth={0.1} /> :
+              <circle r={size} fill="#0079d3" stroke="#000" strokeWidth={0.1} />
+
+            }
+
             </Marker>
           ))}
         </ZoomableGroup>
