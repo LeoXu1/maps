@@ -80,6 +80,13 @@ export default class App extends React.Component {
     }
   };
 
+  handleMapClick = info => {
+    this.setState({
+      selectedState: info.state,
+      selectedCounty: info.county
+    })
+  }
+
   handleRemove(id) {
     const newCoords = this.state.coords.filter(cty => cty.id !== id)
     this.setState({
@@ -128,7 +135,7 @@ export default class App extends React.Component {
             </div>
             <div className="form">
               <label>State:</label>
-              <select name="selectedState" onChange={this.handleStateChange}>
+              <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
                 {allStates.map(state => (
                   <option key={state.val}>{state.id}</option>
                 ))}
@@ -138,7 +145,7 @@ export default class App extends React.Component {
           <div className="header">
             <div className="form">
               <label>County: </label>
-              <select name="selectedCounty" onChange={this.handleSearchChange}>
+              <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
                 {countiesList.filter(county => county.state_name === this.state.selectedState)
                   .map(county => (
                   <option key={county.fips}>{county.county_name}</option>
@@ -205,6 +212,7 @@ export default class App extends React.Component {
           size={this.state.size}
           mode={this.state.mode}
           selected={this.state.id}
+          mapClick={this.handleMapClick}
           />
           <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>

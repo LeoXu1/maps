@@ -7,9 +7,11 @@ import {
   Marker
 } from "react-simple-maps";
 
-const MapChart = ({setTooltipContent, coords, selectCity, size, mode, selected}) => {
+const MapChart = ({setTooltipContent,
+  coords, selectCity, size, mode, selected, mapClick}) => {
   const geoUrl =
-    "https://cdn.jsdelivr.net/npm/us-atlas@3/"+mode+"-10m.json";
+    "https://raw.githubusercontent.com/LeoXu1/counties-with-states-topojson/main/"+mode+"TopoJson.json";
+
   return (
     <>
       <ComposableMap data-tip='' projection="geoAlbersUsa">
@@ -24,10 +26,31 @@ const MapChart = ({setTooltipContent, coords, selectCity, size, mode, selected})
                   geography={geo}
                   fill={"#d6d6d6"}
                   onMouseEnter={() => {
-                    setTooltipContent(geo.properties.name);
+                    if (mode === "counties") {
+                      setTooltipContent(geo.properties.name+", "+geo.properties.state);
+                    }
+                    else {
+                      setTooltipContent(geo.properties.name);
+                    }
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
+                  }}
+                  onClick={() => {
+                    if (mode === "counties") {
+                      const info = {
+                        state: geo.properties.state,
+                        county: geo.properties.name,
+                      }
+                      mapClick(info)
+                    }
+                    else {
+                      const info = {
+                        state: geo.properties.name,
+                        county: "",
+                      }
+                      mapClick(info)
+                    }
                   }}
                   style={{
                     default: { outline: "none" },
