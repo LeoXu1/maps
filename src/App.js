@@ -83,7 +83,8 @@ export default class App extends React.Component {
   handleMapClick = info => {
     this.setState({
       selectedState: info.state,
-      selectedCounty: info.county
+      selectedCounty: info.county,
+      query: ""
     })
   }
 
@@ -123,6 +124,14 @@ export default class App extends React.Component {
     localStorage.setItem("cities", JSON.stringify(this.state.coords))
   }
 
+  clearSearch() {
+    this.setState({
+      query: "",
+      selectedState: "",
+      selectedCounty: ""
+    })
+  }
+
   render() {
     return (
       <div className="base">
@@ -131,7 +140,7 @@ export default class App extends React.Component {
           <div className="header">
             <div className="form">
               <label>City: </label>
-              <input type="text" name="query" onChange={this.handleSearchChange}/>
+              <input type="text" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
             </div>
             <div className="form">
               <label>State:</label>
@@ -154,16 +163,12 @@ export default class App extends React.Component {
             </div>
             <div className="form">
               <label>Results: </label>
-              <select name="numResults" onChange={this.handleSearchChange}>
-                <option>20</option>
-                <option>50</option>
-                <option>75</option>
-                <option>100</option>
-              </select>
+              <input type="number" step={10} value={this.state.numResults} name="numResults" onChange={this.handleSearchChange} />
             </div>
           </div>
           <div className="header">
-            <button onClick={()=>this.clear()}>Clear</button>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
+            <button onClick={()=>this.clearSearch()}>Clear Search</button>
             <button onClick={()=>this.save()}>Save</button>
           </div>
           <CityResults
@@ -186,7 +191,7 @@ export default class App extends React.Component {
                 <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
                 <div className="form">
                   <label>Size: </label>
-                  <input type="number" value={this.state.size} name="size" onChange={this.handleSizeChange}/>
+                  <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
                 </div>
               </div>
             </>
@@ -199,8 +204,8 @@ export default class App extends React.Component {
                   <option>counties</option>
                 </select>
                 <div className="form">
-                  <label>Size: </label>
-                  <input type="number" value={this.state.size} name="size" onChange={this.handleSizeChange}/>
+                  <label for="size">Size: </label>
+                  <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
                 </div>
               </div>
             </>
