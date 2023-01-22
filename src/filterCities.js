@@ -1,4 +1,4 @@
-import citiesList from "./citiesList.json";
+import citiesList from "./data/citiesList.json";
 
 export default function filterCities(searchText, stateSearch, countySearch, maxResults) {
   if (stateSearch !== "") {

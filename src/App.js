@@ -4,8 +4,8 @@ import "./styles.css";
 import MapChart from "./MapChart";
 import filterCities from "./filterCities"
 import CityResults from "./CityResults"
-import allStates from "./allStates.json"
-import countiesList from "./countiesList"
+import allStates from "./data/allStates.json"
+import countiesList from "./data/countiesList"
 import ReactTooltip from "react-tooltip";
 
 export default class App extends React.Component {
