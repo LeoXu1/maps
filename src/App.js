@@ -13,7 +13,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       mode: "states",
-      tooltip: "",
+      tooltip: "Mouse over a state, county, or city.",
       size: 3,
       coords: [],
       query: "",
@@ -210,6 +210,7 @@ export default class App extends React.Component {
               </div>
             </>
           )}
+          <h5>{this.state.tooltip}</h5>
           <MapChart
             coords={this.state.coords}
             setTooltipContent={this.setContent}
@@ -219,7 +220,6 @@ export default class App extends React.Component {
             selected={this.state.id}
             mapClick={this.handleMapClick}
           />
-          <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>
       </div>
     );

@@ -27,14 +27,14 @@ const MapChart = ({setTooltipContent,
                   fill={"#d6d6d6"}
                   onMouseEnter={() => {
                     if (mode === "counties") {
-                      setTooltipContent(<div>{geo.properties.name+", "+geo.properties.state}<br /><p></p></div>);
+                      setTooltipContent(geo.properties.name+", "+geo.properties.state);
                     }
                     else {
-                      setTooltipContent(<div>{geo.properties.name}<br /><p></p></div>);
+                      setTooltipContent(geo.properties.name);
                     }
                   }}
                   onMouseLeave={() => {
-                    setTooltipContent("");
+                    setTooltipContent("Mouse over a state, county, or city.");
                   }}
                   onClick={() => {
                     if (mode === "counties") {
@@ -72,11 +72,11 @@ const MapChart = ({setTooltipContent,
               if (mil){
                 setTooltipContent(<div>{name}<br />{county}<br />Military base</div>);
               } else {
-                setTooltipContent(<div>{name}<br />{county}<br /><p></p></div>);
+                setTooltipContent(<div>{name} ({county})</div>);
               }
             }}
             onMouseLeave={() => {
-              setTooltipContent("");
+              setTooltipContent("Mouse over a state, county, or city.");
             }}
             onClick={() => {
               selectCity({id: id, city: city, stateID: stateID, county: county, military: military});

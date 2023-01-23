@@ -25,8 +25,8 @@ export default class CityResults extends React.Component {
             cityData.LATITUDE, cityData.CITY, cityData.STATE_CODE,
             cityData.COUNTY)}
           className="cityEntry">
-            <h5>{cityData.CITY}, {cityData.STATE_CODE}</h5>
-            <h5>{cityData.COUNTY}</h5>
+            <h4>{cityData.CITY}, {cityData.STATE_CODE}</h4>
+            <h4>{cityData.COUNTY}</h4>
           </div>
         ))}
       </div>
