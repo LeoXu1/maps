@@ -72,7 +72,7 @@ const MapChart = ({setTooltipContent,
               if (mil){
                 setTooltipContent(<div>{name}<br />{county}<br />Military base</div>);
               } else {
-                setTooltipContent(<div>{name}<br />{county}</div>);
+                setTooltipContent(<div>{name}<br />{county}<br /><p></p></div>);
               }
             }}
             onMouseLeave={() => {

@@ -7,7 +7,7 @@ export default function filterCities(searchText, stateSearch, countySearch, maxR
         .filter(city => {
           if (city.CITY.toLowerCase().includes(searchText.toLowerCase())
               && city.STATE_NAME.toLowerCase() === stateSearch.toLowerCase()
-              && countySearch.toLowerCase().includes(city.COUNTY.toLowerCase())) {
+              && countySearch.toLowerCase() === city.COUNTY.toLowerCase()) {
             return true;
           }
           return false;

@@ -211,13 +211,13 @@ export default class App extends React.Component {
             </>
           )}
           <MapChart
-          coords={this.state.coords}
-          setTooltipContent={this.setContent}
-          selectCity={this.setInfo}
-          size={this.state.size}
-          mode={this.state.mode}
-          selected={this.state.id}
-          mapClick={this.handleMapClick}
+            coords={this.state.coords}
+            setTooltipContent={this.setContent}
+            selectCity={this.setInfo}
+            size={this.state.size}
+            mode={this.state.mode}
+            selected={this.state.id}
+            mapClick={this.handleMapClick}
           />
           <ReactTooltip multiline={true}>{this.state.tooltip}</ReactTooltip>
         </div>
