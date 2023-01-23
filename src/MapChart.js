@@ -27,10 +27,10 @@ const MapChart = ({setTooltipContent,
                   fill={"#d6d6d6"}
                   onMouseEnter={() => {
                     if (mode === "counties") {
-                      setTooltipContent(geo.properties.name+", "+geo.properties.state);
+                      setTooltipContent(<div>{geo.properties.name+", "+geo.properties.state}<br /><p></p></div>);
                     }
                     else {
-                      setTooltipContent(geo.properties.name);
+                      setTooltipContent(<div>{geo.properties.name}<br /><p></p></div>);
                     }
                   }}
                   onMouseLeave={() => {
