@@ -6,7 +6,6 @@ import filterCities from "./filterCities"
 import CityResults from "./CityResults"
 import allStates from "./data/allStates.json"
 import countiesList from "./data/countiesList"
-import ReactTooltip from "react-tooltip";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -77,6 +76,7 @@ export default class App extends React.Component {
       this.setState({
         coords: newCoords,
       });
+      localStorage.setItem("cities", JSON.stringify(newCoords))
     }
   };
 
@@ -85,7 +85,7 @@ export default class App extends React.Component {
       selectedState: info.state,
       selectedCounty: info.county,
       query: ""
-    })
+    });
   }
 
   handleRemove(id) {
@@ -94,6 +94,7 @@ export default class App extends React.Component {
       coords: newCoords,
       isSelected: false
     });
+    localStorage.setItem("cities", JSON.stringify(newCoords))
   };
 
   setInfo = info => {
@@ -118,10 +119,6 @@ export default class App extends React.Component {
       coords: [],
       isSelected: false
     })
-  }
-
-  save() {
-    localStorage.setItem("cities", JSON.stringify(this.state.coords))
   }
 
   clearSearch() {
@@ -167,9 +164,8 @@ export default class App extends React.Component {
             </div>
           </div>
           <div className="header">
-            <button onClick={()=>this.clear()}>Clear Cities</button>
             <button onClick={()=>this.clearSearch()}>Clear Search</button>
-            <button onClick={()=>this.save()}>Save</button>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
           </div>
           <CityResults
           citySelect={this.handleCityClick}
