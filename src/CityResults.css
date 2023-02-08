@@ -5,11 +5,11 @@
 .cityEntry {
   display: flex;
   justify-content: space-between;
-  width: 500px
+  width: 300px
 }
 
 .resultsList {
-  width: 550px;
+  width: 500px;
   height: 400px;
   overflow: scroll;
 }
