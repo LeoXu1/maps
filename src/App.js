@@ -57,17 +57,33 @@ export default class App extends React.Component {
   }
 
   handleStateChange = event => {
-    this.setState({
-      selectedState: event.target.value,
-      selectedCounty: ""
-    })
+    if (event.target.value === "Select state") {
+      this.setState({
+        selectedState: "",
+        selectedCounty: ""
+      })
+    }
+    else {
+      this.setState({
+        selectedState: event.target.value,
+        selectedCounty: ""
+      })
+    }
   }
 
   handleSearchChange = event => {
-    this.setState({
-      ...this.state,
-      [event.target.name]: event.target.value
-    });
+    if (event.target.name === "selectedCounty" && event.target.value === "Select county") {
+      this.setState({
+        ...this.state,
+        selectedCounty: ""
+      });
+    }
+    else {
+      this.setState({
+        ...this.state,
+        [event.target.name]: event.target.value
+      });
+    }
   };
 
   handleCityClick = loc => {
@@ -133,39 +149,29 @@ export default class App extends React.Component {
     return (
       <div className="base">
         <div className="container">
-          <h1>Search</h1>
           <div className="header">
-            <div className="form">
-              <label>City: </label>
-              <input type="text" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
-            </div>
-            <div className="form">
-              <label>State:</label>
-              <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
-                {allStates.map(state => (
-                  <option key={state.val}>{state.id}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="header">
-            <div className="form">
-              <label>County: </label>
-              <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
-                {countiesList.filter(county => county.state_name === this.state.selectedState)
-                  .map(county => (
-                  <option key={county.fips}>{county.county_name}</option>
-                ))}
-              </select>
-            </div>
-            <div className="form">
-              <label>Results: </label>
-              <input type="number" step={10} value={this.state.numResults} name="numResults" onChange={this.handleSearchChange} />
-            </div>
+            <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
+              {allStates.map(state => (
+                <option key={state.val}>{state.id}</option>
+              ))}
+            </select>
+            {this.state.selectedState === "" ? (
+              null
+            ) : (
+              <>
+                <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
+                  {countiesList.filter(county => county.state_name === this.state.selectedState)
+                    .map(county => (
+                    <option key={county.fips}>{county.county_name}</option>
+                  ))}
+                </select>
+              </>
+            )}
+            <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
+            <input type="number" step={10} value={this.state.numResults} name="numResults" onChange={this.handleSearchChange} />
           </div>
           <div className="header">
             <button onClick={()=>this.clearSearch()}>Clear Search</button>
-            <button onClick={()=>this.clear()}>Clear Cities</button>
           </div>
           <CityResults
           citySelect={this.handleCityClick}
@@ -175,7 +181,6 @@ export default class App extends React.Component {
           />
         </div>
         <div className="container">
-        <h1>Map</h1>
           {this.state.isSelected ? (
             <>
               <div className="header">
@@ -194,7 +199,6 @@ export default class App extends React.Component {
           ) : (
             <>
               <div className="header">
-                <span>No city selected</span>
                 <select name="mode" onChange={this.handleSearchChange}>
                   <option>states</option>
                   <option>counties</option>
@@ -206,7 +210,10 @@ export default class App extends React.Component {
               </div>
             </>
           )}
-          <h5>{this.state.tooltip}</h5>
+          <div className="header">
+            <h5>{this.state.tooltip}</h5>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
+          </div>
           <MapChart
             coords={this.state.coords}
             setTooltipContent={this.setContent}

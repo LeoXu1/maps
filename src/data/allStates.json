@@ -1,5 +1,5 @@
 [
-  {"id": "", "val": "00"},
+  {"id": "Select state", "val": "00"},
   { "id": "Alabama", "val": "01" },
   { "id": "Alaska", "val": "02" },
   { "id": "Arizona", "val": "04" },
