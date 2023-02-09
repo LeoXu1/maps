@@ -147,61 +147,29 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="header">
-          <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
-            {allStates.map(state => (
-              <option key={state.val}>{state.id}</option>
-            ))}
-          </select>
-          {this.state.selectedState === "" ? (
-            null
-          ) : (
-            <>
-              <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
-                {countiesList.filter(county => county.state_name === this.state.selectedState)
-                  .map(county => (
-                  <option key={county.fips}>{county.county_name}</option>
-                ))}
-              </select>
-            </>
-          )}
-          <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
-          <button onClick={()=>this.clearSearch()}>Clear Search</button>
-        </div>
-        {this.state.isSelected ? (
-          <>
-            <div className="header">
-              <select name="mode" onChange={this.handleSearchChange}>
-                <option>states</option>
-                <option>counties</option>
-              </select>
-              <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>
-              <div className="form">
-                <label>Size: </label>
-                <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="header">
-              <select name="mode" onChange={this.handleSearchChange}>
-                <option>states</option>
-                <option>counties</option>
-              </select>
-              <div className="form">
-                <label for="size">Size: </label>
-                <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
-              </div>
-            </div>
-          </>
-        )}
-        <div className="header">
-          <h5>{this.state.tooltip}</h5>
-          <button onClick={()=>this.clear()}>Clear Cities</button>
-        </div>
-        <div className="base">
+      <div className="base">
+        <div className="container">
+          <div className="header">
+            <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
+              {allStates.map(state => (
+                <option key={state.val}>{state.id}</option>
+              ))}
+            </select>
+            {this.state.selectedState === "" ? (
+              null
+            ) : (
+              <>
+                <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
+                  {countiesList.filter(county => county.state_name === this.state.selectedState)
+                    .map(county => (
+                    <option key={county.fips}>{county.county_name}</option>
+                  ))}
+                </select>
+              </>
+            )}
+            <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
+            <button onClick={()=>this.clearSearch()}>Clear Search</button>
+          </div>
           <CityResults
             citySelect={this.handleCityClick}
             setInfo={this.setInfo}
@@ -210,6 +178,24 @@ export default class App extends React.Component {
             showMore={() => this.setState({numResults: this.state.numResults + 10})}
             showLess={() => this.setState({numResults: this.state.numResults - 10})}
           />
+        </div>
+        
+        <div className="container">
+          <div className="header">
+            <select name="mode" onChange={this.handleSearchChange}>
+              <option>states</option>
+              <option>counties</option>
+            </select>
+            {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
+            <div className="form">
+              <label>Size: </label>
+              <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
+            </div>
+          </div>
+          <div className="header">
+            <h5>{this.state.tooltip}</h5>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
+          </div>
           <MapChart
             coords={this.state.coords}
             setTooltipContent={this.setContent}
