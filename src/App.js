@@ -11,7 +11,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "states",
+      viewMode: "list",
+      mapMode: "states",
       tooltip: "Mouse over a state, county, or city.",
       size: 3,
       coords: [],
@@ -147,65 +148,77 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="base">
-        <div className="container">
-          <div className="header">
-            <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
-              {allStates.map(state => (
-                <option key={state.val}>{state.id}</option>
-              ))}
-            </select>
-            {this.state.selectedState === "" ? (
-              null
-            ) : (
-              <>
-                <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
-                  {countiesList.filter(county => county.state_name === this.state.selectedState)
-                    .map(county => (
-                    <option key={county.fips}>{county.county_name}</option>
-                  ))}
+      <div className="container">
+        <div className="header">
+          <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
+            {allStates.map(state => (
+              <option key={state.val}>{state.id}</option>
+            ))}
+          </select>
+          {this.state.selectedState === "" ? (
+            null
+          ) : (
+            <>
+              <select name="selectedCounty" value={this.state.selectedCounty} onChange={this.handleSearchChange}>
+                {countiesList.filter(county => county.state_name === this.state.selectedState)
+                  .map(county => (
+                  <option key={county.fips}>{county.county_name}</option>
+                ))}
+              </select>
+            </>
+          )}
+        </div>
+        <div className="header">
+          <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
+          <button onClick={()=>this.clearSearch()}>Clear Search</button>
+        </div>
+        <select name="viewMode" onChange={this.handleSearchChange}>
+              <option>list</option>
+              <option>map</option>
+        </select>
+        {this.state.viewMode === "list" ? (
+          <>
+            <CityResults
+              citySelect={this.handleCityClick}
+              setInfo={this.setInfo}
+              cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
+                this.state.numResults)}
+              showMore={() => this.setState({numResults: this.state.numResults + 10})}
+              showLess={() => this.setState({numResults: this.state.numResults - 10})}
+            />
+          </>
+        ) : (
+          <>
+            <div className="container">
+              <div className="header">
+                <select name="mapMode" onChange={this.handleSearchChange}>
+                  <option>states</option>
+                  <option>counties</option>
                 </select>
-              </>
-            )}
-            <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
-            <button onClick={()=>this.clearSearch()}>Clear Search</button>
-          </div>
-          <CityResults
-            citySelect={this.handleCityClick}
-            setInfo={this.setInfo}
-            cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
-              this.state.numResults)}
-            showMore={() => this.setState({numResults: this.state.numResults + 10})}
-            showLess={() => this.setState({numResults: this.state.numResults - 10})}
-          />
-        </div>
-        
-        <div className="container">
-          <div className="header">
-            <select name="mode" onChange={this.handleSearchChange}>
-              <option>states</option>
-              <option>counties</option>
-            </select>
-            {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
-            <div className="form">
-              <label>Size: </label>
-              <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
+                {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
+                <div className="form">
+                  <label>Size: </label>
+                  <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
+                </div>
+              </div>
+              <div className="header">
+                <h5>{this.state.tooltip}</h5>
+                <button onClick={()=>this.clear()}>Clear Cities</button>
+              </div>
+              <div className="mapHolder">
+                <MapChart
+                  coords={this.state.coords}
+                  setTooltipContent={this.setContent}
+                  selectCity={this.setInfo}
+                  size={this.state.size}
+                  mode={this.state.mapMode}
+                  selected={this.state.id}
+                  mapClick={this.handleMapClick}
+                />
+              </div>
             </div>
-          </div>
-          <div className="header">
-            <h5>{this.state.tooltip}</h5>
-            <button onClick={()=>this.clear()}>Clear Cities</button>
-          </div>
-          <MapChart
-            coords={this.state.coords}
-            setTooltipContent={this.setContent}
-            selectCity={this.setInfo}
-            size={this.state.size}
-            mode={this.state.mode}
-            selected={this.state.id}
-            mapClick={this.handleMapClick}
-          />
-        </div>
+          </>
+        )}
       </div>
     );
   }

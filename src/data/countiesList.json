@@ -41,7 +41,7 @@
   },
   {
     "fips": 108,
-    "county_name": "",
+    "county_name": "Select county",
     "state_name": "District of Columbia"
   },
   {
@@ -1853,11 +1853,6 @@
     "fips": 10005,
     "county_name": "Sussex",
     "state_name": "Delaware"
-  },
-  {
-    "fips": 11001,
-    "county_name": "District of Columbia",
-    "state_name": "District of Columbia"
   },
   {
     "fips": 11001,
