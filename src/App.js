@@ -150,6 +150,10 @@ export default class App extends React.Component {
     return (
       <div className="container">
         <div className="header">
+          <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
+          <button onClick={()=>this.clearSearch()}>Clear Search</button>
+        </div>
+        <div className="header">
           <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
             {allStates.map(state => (
               <option key={state.val}>{state.id}</option>
@@ -169,13 +173,11 @@ export default class App extends React.Component {
           )}
         </div>
         <div className="header">
-          <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
-          <button onClick={()=>this.clearSearch()}>Clear Search</button>
+          <select name="viewMode" onChange={this.handleSearchChange}>
+                <option>list</option>
+                <option>map</option>
+          </select>
         </div>
-        <select name="viewMode" onChange={this.handleSearchChange}>
-              <option>list</option>
-              <option>map</option>
-        </select>
         {this.state.viewMode === "list" ? (
           <>
             <CityResults
@@ -202,7 +204,7 @@ export default class App extends React.Component {
                 </div>
               </div>
               <div className="header">
-                <h5>{this.state.tooltip}</h5>
+                <p>{this.state.tooltip}</p>
                 <button onClick={()=>this.clear()}>Clear Cities</button>
               </div>
               <div className="mapHolder">

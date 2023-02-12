@@ -14,3 +14,7 @@
   height: 400px;
   overflow: scroll;
 }
+
+.resultsList p {
+  font-size: 12pt;
+}

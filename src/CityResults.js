@@ -25,7 +25,7 @@ export default class CityResults extends React.Component {
             cityData.LATITUDE, cityData.CITY, cityData.STATE_CODE,
             cityData.COUNTY)}
           className="cityEntry">
-            <h4>{cityData.CITY}, {cityData.STATE_CODE} ({cityData.COUNTY})</h4>
+            <p>{cityData.CITY}, {cityData.STATE_CODE} ({cityData.COUNTY})</p>
           </div>
         ))}
         <button onClick={this.props.showMore}>Show More</button>
