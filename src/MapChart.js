@@ -34,7 +34,7 @@ const MapChart = ({setTooltipContent,
                     }
                   }}
                   onMouseLeave={() => {
-                    setTooltipContent("Mouse over a state, county, or city.");
+                    setTooltipContent("");
                   }}
                   onClick={() => {
                     if (mode === "counties") {
@@ -62,25 +62,19 @@ const MapChart = ({setTooltipContent,
               ))
             }
           </Geographies>
-          {coords.map(({id, loc, city, stateID, county, military}) => (
+          {coords.map(({id, loc, city, stateID, county}) => (
             <Marker
             key = {id}
             coordinates={loc}
             onMouseEnter={() => {
-              const name = city.concat(", ",stateID,)
-              const mil = military === "TRUE"
-              if (mil){
-                setTooltipContent(<div>{name}<br />{county}<br />Military base</div>);
-              } else {
-                setTooltipContent(<div>{name} ({county})</div>);
-              }
+              const name = city.concat(", ",stateID)
+              setTooltipContent(<div>{name} ({county})</div>);
             }}
             onMouseLeave={() => {
-              setTooltipContent("Mouse over a state, county, or city.");
+              setTooltipContent("");
             }}
             onClick={() => {
-              selectCity({id: id, city: city, stateID: stateID, county: county, military: military});
-              setTooltipContent("");
+              selectCity({id: id, city: city, stateID: stateID, county: county});
             }}
             style={
             {

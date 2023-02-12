@@ -13,7 +13,7 @@ export default class App extends React.Component {
     this.state = {
       viewMode: "list",
       mapMode: "states",
-      tooltip: "Mouse over a state, county, or city.",
+      tooltip: "",
       size: 3,
       coords: [],
       query: "",
