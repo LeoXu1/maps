@@ -1,11 +1,12 @@
 .cityEntry:hover {
-  background-color: #eee
+  background-color: #dddddd
 }
 
 .cityEntry {
   display: flex;
   justify-content: space-between;
-  width: 100%
+  width: 100%;
+  background-color: #eee;
 }
 
 .resultsList {
@@ -13,8 +14,11 @@
   width: 100%;
   height: 400px;
   overflow: scroll;
+  border: #0079d3;
+  border-width: 2px;
 }
 
 .resultsList p {
   font-size: 12pt;
+  margin-left: 10px;
 }

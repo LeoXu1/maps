@@ -138,14 +138,6 @@ export default class App extends React.Component {
     })
   }
 
-  clearSearch() {
-    this.setState({
-      query: "",
-      selectedState: "",
-      selectedCounty: ""
-    })
-  }
-
   render() {
     return (
       <div className="container">
@@ -170,7 +162,6 @@ export default class App extends React.Component {
               </select>
             </>
           )}
-          <button onClick={()=>this.clearSearch()}>Clear Search</button>
         </div>
         <div className="header">
           {this.state.showList === true ? (
