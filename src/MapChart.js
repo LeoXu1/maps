@@ -9,9 +9,13 @@ import {
 
 const MapChart = ({setTooltipContent,
   coords, selectCity, size, mode, selected, mapClick}) => {
-  const geoUrl =
-    "https://raw.githubusercontent.com/LeoXu1/counties-with-states-topojson/main/"+mode+"TopoJson.json";
-
+  var geoUrl = "https://raw.githubusercontent.com/LeoXu1/counties-with-states-topojson/main/"
+  if (mode === true) {
+    geoUrl = geoUrl + "statesTopoJson.json";
+  }
+  else {
+    geoUrl = geoUrl + "countiesTopoJson.json";
+  }
   return (
     <>
       <ComposableMap data-tip='' projection="geoAlbersUsa">
@@ -34,7 +38,7 @@ const MapChart = ({setTooltipContent,
                     }
                   }}
                   onMouseLeave={() => {
-                    setTooltipContent("");
+                    setTooltipContent("USA");
                   }}
                   onClick={() => {
                     if (mode === "counties") {
@@ -71,7 +75,7 @@ const MapChart = ({setTooltipContent,
               setTooltipContent(<div>{name} ({county})</div>);
             }}
             onMouseLeave={() => {
-              setTooltipContent("");
+              setTooltipContent("USA");
             }}
             onClick={() => {
               selectCity({id: id, city: city, stateID: stateID, county: county});

@@ -11,9 +11,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewMode: "list",
-      mapMode: "states",
-      tooltip: "",
+      showList: true,
+      mapStates: true,
+      tooltip: "USA",
       size: 3,
       coords: [],
       query: "",
@@ -151,7 +151,6 @@ export default class App extends React.Component {
       <div className="container">
         <div className="header">
           <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
-          <button onClick={()=>this.clearSearch()}>Clear Search</button>
         </div>
         <div className="header">
           <select name="selectedState" value={this.state.selectedState} onChange={this.handleStateChange}>
@@ -171,55 +170,54 @@ export default class App extends React.Component {
               </select>
             </>
           )}
+          <button onClick={()=>this.clearSearch()}>Clear Search</button>
         </div>
         <div className="header">
-          <select name="viewMode" onChange={this.handleSearchChange}>
-                <option>list</option>
-                <option>map</option>
-          </select>
+          {this.state.showList === true ? (
+            <button onClick={()=>this.setState({showList: !this.state.showList})}>Show map</button>
+          ) : (
+            <button onClick={()=>this.setState({showList: !this.state.showList})}>Show list</button>
+          )}
         </div>
-        {this.state.viewMode === "list" ? (
-          <>
-            <CityResults
-              citySelect={this.handleCityClick}
-              setInfo={this.setInfo}
-              cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
-                this.state.numResults)}
-              showMore={() => this.setState({numResults: this.state.numResults + 10})}
-              showLess={() => this.setState({numResults: this.state.numResults - 10})}
-            />
-          </>
+        {this.state.showList === true ? (
+          <CityResults
+          citySelect={this.handleCityClick}
+          setInfo={this.setInfo}
+          cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
+            this.state.numResults)}
+          showMore={() => this.setState({numResults: this.state.numResults + 10})}
+          showLess={() => this.setState({numResults: this.state.numResults - 10})}
+          />
         ) : (
-          <>
-            <div className="container">
-              <div className="header">
-                <select name="mapMode" onChange={this.handleSearchChange}>
-                  <option>states</option>
-                  <option>counties</option>
-                </select>
-                {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
-                <div className="form">
-                  <label>Size: </label>
-                  <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
-                </div>
-              </div>
-              <div className="header">
-                <p>{this.state.tooltip}</p>
-                <button onClick={()=>this.clear()}>Clear Cities</button>
-              </div>
-              <div className="mapHolder">
-                <MapChart
-                  coords={this.state.coords}
-                  setTooltipContent={this.setContent}
-                  selectCity={this.setInfo}
-                  size={this.state.size}
-                  mode={this.state.mapMode}
-                  selected={this.state.id}
-                  mapClick={this.handleMapClick}
-                />
+          <div className="container">
+            <div className="header">
+              {this.state.mapStates === true ? (
+                <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show counties</button>
+              ) : (
+                <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show states</button>
+              )}
+              {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
+              <div className="form">
+                <label>Size: </label>
+                <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
               </div>
             </div>
-          </>
+            <div className="header">
+              <p>{this.state.tooltip}</p>
+              <button onClick={()=>this.clear()}>Clear Cities</button>
+            </div>
+            <div className="mapHolder">
+              <MapChart
+                coords={this.state.coords}
+                setTooltipContent={this.setContent}
+                selectCity={this.setInfo}
+                size={this.state.size}
+                mode={this.state.mapStates}
+                selected={this.state.id}
+                mapClick={this.handleMapClick}
+              />
+            </div>
+          </div>
         )}
       </div>
     );
