@@ -1,9 +1,3 @@
-.base {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -18,13 +12,8 @@
   justify-content: space-between;
   width: 100%;
   max-width: 550px;
-  height: fit-content;
+  height: 20px;
   padding: 5px;
-}
-
-.mapHolder {
-  width: 100%;
-  max-width: 550px;
 }
 
 .header p {
@@ -35,13 +24,24 @@
   font-size: 12px
 }
 
-.header input[type=number] {
-  width: 20%
+.spaceBar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 550px;
+  height: fit-content;
+  padding: 5px;
 }
 
-.header input[type=text] {
+.spaceBar input[type=text] {
   font-size: 16pt;
   height: fit-content;
+  width: 100%
+}
+
+.mapHolder {
+  width: 100%;
+  max-width: 550px;
 }
 
 .form {

@@ -149,7 +149,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="header">
+        <div className="spaceBar">
           <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
         </div>
         <div className="header">

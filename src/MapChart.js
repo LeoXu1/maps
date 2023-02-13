@@ -30,8 +30,8 @@ const MapChart = ({setTooltipContent,
                   geography={geo}
                   fill={"#d6d6d6"}
                   onMouseEnter={() => {
-                    if (mode === "counties") {
-                      setTooltipContent(geo.properties.name+", "+geo.properties.state);
+                    if (mode === false) {
+                      setTooltipContent(geo.properties.name+" ("+geo.properties.state+")");
                     }
                     else {
                       setTooltipContent(geo.properties.name);
@@ -41,7 +41,7 @@ const MapChart = ({setTooltipContent,
                     setTooltipContent("USA");
                   }}
                   onClick={() => {
-                    if (mode === "counties") {
+                    if (mode === false) {
                       const info = {
                         state: geo.properties.state,
                         county: geo.properties.name,
