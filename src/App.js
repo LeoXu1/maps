@@ -11,7 +11,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showList: true,
       mapStates: true,
       tooltip: "USA",
       size: 3,
@@ -141,6 +140,35 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container">
+        <div className="container">
+          <div className="header">
+            {this.state.mapStates === true ? (
+              <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show counties</button>
+            ) : (
+              <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show states</button>
+            )}
+            {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
+            <div className="form">
+              <label>Size: </label>
+              <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
+            </div>
+          </div>
+          <div className="header">
+            <h5>{this.state.tooltip}</h5>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
+          </div>
+          <div className="mapHolder">
+            <MapChart
+              coords={this.state.coords}
+              setTooltipContent={this.setContent}
+              selectCity={this.setInfo}
+              size={this.state.size}
+              mode={this.state.mapStates}
+              selected={this.state.id}
+              mapClick={this.handleMapClick}
+            />
+          </div>
+        </div>
         <div className="spaceBar">
           <input type="text" placeholder="Search city" value={this.state.query} name="query" onChange={this.handleSearchChange}/>
         </div>
@@ -163,53 +191,14 @@ export default class App extends React.Component {
             </>
           )}
         </div>
-        <div className="header">
-          {this.state.showList === true ? (
-            <button onClick={()=>this.setState({showList: !this.state.showList})}>Show map</button>
-          ) : (
-            <button onClick={()=>this.setState({showList: !this.state.showList})}>Show list</button>
-          )}
-        </div>
-        {this.state.showList === true ? (
-          <CityResults
+        <CityResults
           citySelect={this.handleCityClick}
           setInfo={this.setInfo}
           cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
             this.state.numResults)}
           showMore={() => this.setState({numResults: this.state.numResults + 10})}
           showLess={() => this.setState({numResults: this.state.numResults - 10})}
-          />
-        ) : (
-          <div className="container">
-            <div className="header">
-              {this.state.mapStates === true ? (
-                <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show counties</button>
-              ) : (
-                <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show states</button>
-              )}
-              {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
-              <div className="form">
-                <label>Size: </label>
-                <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
-              </div>
-            </div>
-            <div className="header">
-              <p>{this.state.tooltip}</p>
-              <button onClick={()=>this.clear()}>Clear Cities</button>
-            </div>
-            <div className="mapHolder">
-              <MapChart
-                coords={this.state.coords}
-                setTooltipContent={this.setContent}
-                selectCity={this.setInfo}
-                size={this.state.size}
-                mode={this.state.mapStates}
-                selected={this.state.id}
-                mapClick={this.handleMapClick}
-              />
-            </div>
-          </div>
-        )}
+        />
       </div>
     );
   }
