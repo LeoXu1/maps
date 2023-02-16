@@ -13,7 +13,7 @@ export default class App extends React.Component {
     this.state = {
       mapStates: true,
       tooltip: "USA",
-      size: 3,
+      size: 10,
       coords: [],
       query: "",
       selectedState: "",
@@ -142,21 +142,22 @@ export default class App extends React.Component {
       <div className="container">
         <div className="container">
           <div className="header">
+            <button>Help</button>
+            <button>Edit Cities</button>
+            <button onClick={()=>this.clear()}>Clear Cities</button>
+          </div>
+          <div className="header">
             {this.state.mapStates === true ? (
               <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show counties</button>
             ) : (
               <button onClick={()=>this.setState({mapStates: !this.state.mapStates})}>Show states</button>
             )}
-            {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
             <div className="form">
               <label>Size: </label>
               <input type="range" id="size" value={this.state.size} name="size" min="1" max="20" onChange={this.handleSizeChange}/>
             </div>
           </div>
-          <div className="header">
-            <h5>{this.state.tooltip}</h5>
-            <button onClick={()=>this.clear()}>Clear Cities</button>
-          </div>
+          <h5>{this.state.tooltip}</h5>
           <div className="mapHolder">
             <MapChart
               coords={this.state.coords}
@@ -191,6 +192,13 @@ export default class App extends React.Component {
             </>
           )}
         </div>
+        <button onClick={() => {
+          this.setState({
+            query: "",
+            selectedState: "",
+            selectedCounty: ""
+          })
+        }}>Clear Search</button>
         <CityResults
           citySelect={this.handleCityClick}
           setInfo={this.setInfo}
