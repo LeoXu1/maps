@@ -93,12 +93,14 @@ export default class App extends React.Component {
   };
 
   handleCityClick = loc => {
+    this.setState({
+      defaultTooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")",
+      tooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")"
+    });
     if (!this.state.coords.some((l) => l.id === loc.id)) {
       const newCoords = this.state.coords.concat(loc)
       this.setState({
-        coords: newCoords,
-        defaultTooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")",
-        tooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")"
+        coords: newCoords
       });
       localStorage.setItem("cities", JSON.stringify(newCoords))
     }
