@@ -9,6 +9,17 @@
   background-color: #eee;
 }
 
+.showMoreBtn:hover {
+  background-color: #dddddd
+}
+
+.showMoreBtn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #eee;
+}
+
 .resultsList {
   max-width: 550px;
   width: 100%;

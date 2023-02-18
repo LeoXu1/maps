@@ -13,6 +13,7 @@ export default class App extends React.Component {
     this.state = {
       mapStates: true,
       tooltip: "USA",
+      defaultTooltip: "USA",
       size: 10,
       coords: [],
       query: "",
@@ -57,6 +58,9 @@ export default class App extends React.Component {
   }
 
   handleStateChange = event => {
+    this.setState({
+      numResults: 20
+    })
     if (event.target.value === "Select state") {
       this.setState({
         selectedState: "",
@@ -75,13 +79,15 @@ export default class App extends React.Component {
     if (event.target.name === "selectedCounty" && event.target.value === "Select county") {
       this.setState({
         ...this.state,
-        selectedCounty: ""
+        selectedCounty: "",
+        numResults: 20
       });
     }
     else {
       this.setState({
         ...this.state,
-        [event.target.name]: event.target.value
+        [event.target.name]: event.target.value,
+        numResults: 20
       });
     }
   };
@@ -91,6 +97,8 @@ export default class App extends React.Component {
       const newCoords = this.state.coords.concat(loc)
       this.setState({
         coords: newCoords,
+        defaultTooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")",
+        tooltip: loc.city + ", " + loc.stateID + " (" + loc.county + ")"
       });
       localStorage.setItem("cities", JSON.stringify(newCoords))
     }
@@ -100,7 +108,13 @@ export default class App extends React.Component {
     this.setState({
       selectedState: info.state,
       selectedCounty: info.county,
-      query: ""
+      query: "",
+      city: "",
+      stateID: "",
+      county: "",
+      id: "",
+      isSelected: false,
+      defaultTooltip: "USA"
     });
   }
 
@@ -108,7 +122,9 @@ export default class App extends React.Component {
     const newCoords = this.state.coords.filter(cty => cty.id !== id)
     this.setState({
       coords: newCoords,
-      isSelected: false
+      isSelected: false,
+      defaultTooltip: "USA",
+      tooltip: "USA"
     });
     localStorage.setItem("cities", JSON.stringify(newCoords))
   };
@@ -119,7 +135,8 @@ export default class App extends React.Component {
       stateID: info.stateID,
       county: info.county,
       id: info.id,
-      isSelected: true
+      isSelected: true,
+      defaultTooltip: info.city + ", " + info.stateID + " (" + info.county + ")"
     });
   }
 
@@ -133,7 +150,9 @@ export default class App extends React.Component {
     localStorage.removeItem("cities");
     this.setState({
       coords: [],
-      isSelected: false
+      isSelected: false,
+      defaultTooltip: "USA",
+      tooltip: "USA"
     })
   }
 
@@ -143,7 +162,7 @@ export default class App extends React.Component {
         <div className="container">
           <div className="header">
             <button>Help</button>
-            <button>Edit Cities</button>
+            {this.state.isSelected && <button onClick={() => this.handleRemove(this.state.id)}>Delete</button>}
             <button onClick={()=>this.clear()}>Clear Cities</button>
           </div>
           <div className="header">
@@ -167,6 +186,7 @@ export default class App extends React.Component {
               mode={this.state.mapStates}
               selected={this.state.id}
               mapClick={this.handleMapClick}
+              defaultTooltip={this.state.defaultTooltip}
             />
           </div>
         </div>
@@ -196,7 +216,8 @@ export default class App extends React.Component {
           this.setState({
             query: "",
             selectedState: "",
-            selectedCounty: ""
+            selectedCounty: "",
+            numResults: 20
           })
         }}>Clear Search</button>
         <CityResults
@@ -205,7 +226,6 @@ export default class App extends React.Component {
           cityData={filterCities(this.state.query,this.state.selectedState, this.state.selectedCounty,
             this.state.numResults)}
           showMore={() => this.setState({numResults: this.state.numResults + 10})}
-          showLess={() => this.setState({numResults: this.state.numResults - 10})}
         />
       </div>
     );

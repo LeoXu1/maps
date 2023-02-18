@@ -28,8 +28,9 @@ export default class CityResults extends React.Component {
             <p>{cityData.CITY}, {cityData.STATE_CODE} ({cityData.COUNTY})</p>
           </div>
         ))}
-        <button onClick={this.props.showMore}>Show More</button>
-        <button onClick={this.props.showLess}>Show Less</button>
+        <div className='showMoreBtn' onClick={this.props.showMore}>
+          <p>Show More</p>
+        </div>
       </div>
     );
   }

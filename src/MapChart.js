@@ -7,7 +7,7 @@ import {
   Marker
 } from "react-simple-maps";
 
-const MapChart = ({setTooltipContent,
+const MapChart = ({setTooltipContent, defaultTooltip,
   coords, selectCity, size, mode, selected, mapClick}) => {
   var geoUrl = "https://raw.githubusercontent.com/LeoXu1/counties-with-states-topojson/main/"
   if (mode === true) {
@@ -38,7 +38,7 @@ const MapChart = ({setTooltipContent,
                     }
                   }}
                   onMouseLeave={() => {
-                    setTooltipContent("USA");
+                    setTooltipContent(defaultTooltip);
                   }}
                   onClick={() => {
                     if (mode === false) {
@@ -75,7 +75,7 @@ const MapChart = ({setTooltipContent,
               setTooltipContent(<div>{name} ({county})</div>);
             }}
             onMouseLeave={() => {
-              setTooltipContent("USA");
+              setTooltipContent(defaultTooltip);
             }}
             onClick={() => {
               selectCity({id: id, city: city, stateID: stateID, county: county});
